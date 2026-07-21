@@ -1,0 +1,13 @@
+import cv2
+image = cv2.imread(r"C:\Users\pavan\OneDrive\Opencv\RC.webp")
+if image is None:
+    print("Error: Image not found.")
+else:
+    small_image = cv2.resize(image, None, fx=0.6, fy=0.6, interpolation=cv2.INTER_AREA)
+    flipped_image = cv2.flip(small_image, 1)
+    rotated_image = cv2.rotate(flipped_image, cv2.ROTATE_90_COUNTERCLOCKWISE)
+    cv2.imshow("Original Image", small_image)
+    cv2.imshow("Rotated 270-degree Clockwise Along Y-axis", rotated_image)
+    cv2.imwrite(r"C:\Users\pavan\OneDrive\Opencv\rotated_image_270.png", rotated_image)
+    cv2.waitKey(0)
+    cv2.destroyAllWindows()
