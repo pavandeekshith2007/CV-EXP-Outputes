@@ -1,0 +1,34 @@
+import cv2
+import numpy as np
+video_path = r"C:\Users\pavan\OneDrive\Opencv\video.mp4"
+cap = cv2.VideoCapture(video_path)
+if not cap.isOpened():
+    print("Error: Cannot open video.")
+else:
+    frames = []
+    while True:
+        ret, frame = cap.read()
+        if not ret:
+            break
+        frames.append(frame)
+    cap.release()
+    slow_idx = 0
+    fast_idx = 0
+    total = len(frames)
+    while True:
+        if slow_idx >= total or fast_idx >= total:
+            break
+
+        slow_frame = cv2.resize(frames[slow_idx], (320, 240))
+
+        fast_frame = cv2.resize(frames[fast_idx], (320, 240))
+
+        combined = np.hstack((slow_frame, fast_frame))
+        cv2.imshow("Slow (Left) | Fast (Right)", combined)
+        slow_idx += 1       # normal
+        fast_idx += 4       # fast jump
+
+        if cv2.waitKey(60) == 27:
+            break
+
+    cv2.destroyAllWindows()
