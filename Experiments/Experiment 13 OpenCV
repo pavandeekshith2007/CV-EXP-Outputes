@@ -1,0 +1,32 @@
+import cv2
+import numpy as np
+
+# Read image from your path
+image = cv2.imread(r"C:\Users\pavan\OneDrive\Opencv\RC.webp")
+
+if image is None:
+    print("Error: Image not found.")
+else:
+    # Resize image to smaller size
+    image = cv2.resize(image, None, fx=0.6, fy=0.6, interpolation=cv2.INTER_AREA)
+
+    rows, cols, ch = image.shape
+
+    # Define points for affine transformation
+    pts1 = np.float32([[50, 50], [200, 50], [50, 200]])
+    pts2 = np.float32([[10, 100], [200, 50], [100, 250]])
+
+    # Get transformation matrix
+    matrix = cv2.getAffineTransform(pts1, pts2)
+
+    # Apply affine transformation
+    transformed_image = cv2.warpAffine(image, matrix, (cols, rows))
+
+    cv2.imshow("Original Image", image)
+    cv2.imshow("Affine Transformed Image", transformed_image)
+
+    # Save output image
+    cv2.imwrite(rC:\Users\pavan\OneDrive\Opencv\affine_transformed.png", transformed_image)
+
+    cv2.waitKey(0)
+    cv2.destroyAllWindows()
